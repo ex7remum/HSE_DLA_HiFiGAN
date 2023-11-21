@@ -72,9 +72,9 @@ def create_alignment(base_mat, duration_predictor_output):
 class LengthRegulator(nn.Module):
     """ Length Regulator """
 
-    def __init__(self, max_seq_len, *args, **kwargs):
+    def __init__(self, encoder_dim, max_seq_len, *args, **kwargs):
         super(LengthRegulator, self).__init__()
-        self.duration_predictor = VariancePredictor(**kwargs)
+        self.duration_predictor = VariancePredictor(encoder_dim, **kwargs)
         self.max_seq_len = max_seq_len
 
     def LR(self, x, duration_predictor_output, mel_max_length=None):

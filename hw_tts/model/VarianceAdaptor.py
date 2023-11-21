@@ -37,7 +37,7 @@ class VarianceAdaptor(nn.Module):
             mode="linspace",
         )
 
-        self.pitch_predictor = VariancePredictor(encoder_dim, **kwargs)
+        self.pitch_predictor = VariancePredictor(encoder_dim, kwargs['max_seq_len'], **kwargs)
         self.pitch_emb = QuantizationEmbedding(
             n_bins_pitch,
             pitch_min,
