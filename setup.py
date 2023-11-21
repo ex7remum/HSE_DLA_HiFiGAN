@@ -5,6 +5,7 @@ import pyworld
 from tqdm import tqdm
 import gdown
 import tarfile
+import zipfile
 import wget
 from hw_tts.preprocess.audio.tools import get_mel
 from sklearn.preprocessing import StandardScaler
@@ -45,6 +46,10 @@ if __name__ == "__main__":
     print('Downloading alignments')
     filename = wget.download('https://github.com/xcmyz/FastSpeech/raw/master/alignments.zip',
                              out=out_dir+'/alignments.zip')
+
+    print('Extracting alignments')
+    with zipfile.ZipFile('./data/alignments.zip', 'r') as zipfile:
+        zipfile.extractall(out_dir)
 
     print('Downolading dataset')
     filename = wget.download('https://data.keithito.com/data/speech/LJSpeech-1.1.tar.bz2',

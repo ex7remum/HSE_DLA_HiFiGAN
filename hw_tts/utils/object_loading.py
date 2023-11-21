@@ -4,9 +4,10 @@ from torch.utils.data import ConcatDataset, DataLoader, random_split
 import torch
 
 import hw_tts.datasets
-import hw_tts.collate_fn as collate_module
+import hw_tts.collate_fn.collate as collator
 import hw_tts.batch_sampler as batch_sampler_module
 from hw_tts.utils.parse_config import ConfigParser
+
 
 def create_dataloader(dataset, configs, params):
     # select batch size or batch sampler
@@ -29,12 +30,11 @@ def create_dataloader(dataset, configs, params):
     assert bs <= len(dataset), \
         f"Batch size ({bs}) shouldn't be larger than dataset length ({len(dataset)})"
 
-    collator = configs.init_obj(params["collator"], collate_module)
     num_workers = params.get("num_workers", 1)
 
     # create dataloader
     dataloader = DataLoader(
-        dataset, batch_size=bs, collate_fn=collator,
+        dataset, batch_size=bs, collate_fn=collator.collate_fn(),
         shuffle=shuffle, num_workers=num_workers,
         batch_sampler=batch_sampler, drop_last=drop_last, pin_memory=True
     )
