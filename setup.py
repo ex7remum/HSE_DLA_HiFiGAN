@@ -35,7 +35,7 @@ if __name__ == "__main__":
                    out_dir+'/train.txt')
 
     print('Downloading mels')
-    gdown.download("https://drive.google.com/uc?export=download&id=1cJKJTmYd905a-9GFoo5gKjzhKjUVj83j",
+    gdown.download("https://drive.google.com/uc?export=download&id=1J2dvpjGIiGw2g4FdPj99uK2SjCLJoVT4",
                    out_dir+'/mel.tar.gz')
 
     print('Extracting mels')
