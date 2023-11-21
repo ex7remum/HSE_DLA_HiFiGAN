@@ -7,7 +7,6 @@ tensorboard
 matplotlib
 pandas
 librosa
-tarfile
 unidecode
 dacite
 sklearn
