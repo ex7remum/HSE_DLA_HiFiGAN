@@ -31,10 +31,10 @@ if __name__ == "__main__":
     os.makedirs(energy_dir, exist_ok=False)
 
     print('Donloading texts')
-    gdown.download("https://drive.google.com/u/0/uc?id=1-EdH0t0loc6vPiuVtXdhsDtzygWNSNZx", out_dir)
+    gdown.download("https://drive.google.com/uc?export=download&id=1-EdH0t0loc6vPiuVtXdhsDtzygWNSNZx", out_dir)
 
     print('Downloading mels')
-    gdown.download("https://drive.google.com/u/0/uc?id=1cJKJTmYd905a-9GFoo5gKjzhKjUVj83j", out_dir)
+    gdown.download("https://drive.google.com/uc?export=download&id=1cJKJTmYd905a-9GFoo5gKjzhKjUVj83j", out_dir)
 
     print('Extracting mels')
     with tarfile.open('./data/mel.tar.gz', 'r') as tar:
@@ -56,7 +56,7 @@ if __name__ == "__main__":
     os.makedirs(wg_dir, exist_ok=False)
 
     print('Donwloading pretrained WaveGlow')
-    gdown.download("https://drive.google.com/u/0/uc?id=1WsibBTsuRg_SF2Z6L6NFRTT-NjEy1oTx", wg_dir)
+    gdown.download("https://drive.google.com/uc?export=download&id=1WsibBTsuRg_SF2Z6L6NFRTT-NjEy1oTx", wg_dir)
 
     pitch_scaler = StandardScaler()
     energy_scaler = StandardScaler()
