@@ -26,7 +26,7 @@ class VarianceAdaptor(nn.Module):
                  encoder_dim, n_bins_pitch, pitch_min, pitch_max, *args, **kwargs):
         super().__init__()
 
-        self.length_regulator = LengthRegulator(**kwargs)
+        self.length_regulator = LengthRegulator(encoder_dim, **kwargs)
 
         self.energy_predictor = VariancePredictor(encoder_dim, **kwargs)
         self.energy_emb = QuantizationEmbedding(
@@ -37,7 +37,7 @@ class VarianceAdaptor(nn.Module):
             mode="linspace",
         )
 
-        self.pitch_predictor = VariancePredictor(encoder_dim, kwargs['max_seq_len'], **kwargs)
+        self.pitch_predictor = VariancePredictor(encoder_dim, **kwargs)
         self.pitch_emb = QuantizationEmbedding(
             n_bins_pitch,
             pitch_min,
