@@ -31,20 +31,24 @@ if __name__ == "__main__":
     os.makedirs(energy_dir, exist_ok=False)
 
     print('Donloading texts')
-    gdown.download("https://drive.google.com/uc?export=download&id=1-EdH0t0loc6vPiuVtXdhsDtzygWNSNZx", out_dir)
+    gdown.download("https://drive.google.com/uc?export=download&id=1-EdH0t0loc6vPiuVtXdhsDtzygWNSNZx",
+                   out_dir+'train.txt')
 
     print('Downloading mels')
-    gdown.download("https://drive.google.com/uc?export=download&id=1cJKJTmYd905a-9GFoo5gKjzhKjUVj83j", out_dir)
+    gdown.download("https://drive.google.com/uc?export=download&id=1cJKJTmYd905a-9GFoo5gKjzhKjUVj83j",
+                   out_dir+'mel.tar.gz')
 
     print('Extracting mels')
     with tarfile.open('./data/mel.tar.gz', 'r') as tar:
         tar.extractall(out_dir)
 
     print('Downloading alignments')
-    filename = wget.download('https://github.com/xcmyz/FastSpeech/raw/master/alignments.zip', out=out_dir)
+    filename = wget.download('https://github.com/xcmyz/FastSpeech/raw/master/alignments.zip',
+                             out=out_dir+'alignments.zip')
 
     print('Downolading dataset')
-    filename = wget.download('https://data.keithito.com/data/speech/LJSpeech-1.1.tar.bz2', out=out_dir)
+    filename = wget.download('https://data.keithito.com/data/speech/LJSpeech-1.1.tar.bz2',
+                             out=out_dir+'LJSpeech-1.1.tar.bz2')
 
     print('Extracting audios')
     with tarfile.open('./data/LJSpeech-1.1.tar.bz2', 'r') as tar:
@@ -56,7 +60,8 @@ if __name__ == "__main__":
     os.makedirs(wg_dir, exist_ok=False)
 
     print('Donwloading pretrained WaveGlow')
-    gdown.download("https://drive.google.com/uc?export=download&id=1WsibBTsuRg_SF2Z6L6NFRTT-NjEy1oTx", wg_dir)
+    gdown.download("https://drive.google.com/uc?export=download&id=1WsibBTsuRg_SF2Z6L6NFRTT-NjEy1oTx",
+                   wg_dir+'waveglow_256channels_ljs_v2.pt')
 
     pitch_scaler = StandardScaler()
     energy_scaler = StandardScaler()
