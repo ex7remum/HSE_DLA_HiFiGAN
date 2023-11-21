@@ -9,7 +9,7 @@ pandas
 librosa
 unidecode
 dacite
-sklearn
+scikit-learn
 pillow
 pyworld
 wget

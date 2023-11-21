@@ -50,7 +50,7 @@ class Trainer(BaseTrainer):
             "grad norm", *[m.name for m in self.metrics], writer=self.writer
         )
         self.sr = 22050
-        self.waveglow = WaveGlowInfer('./pretrained_models/waveglow_256channels_ljs_v2.pt', model.device)
+        self.waveglow = WaveGlowInfer('./pretrained_models/waveglow_256channels_ljs_v2.pt', device)
 
     @staticmethod
     def move_batch_to_device(batch, device: torch.device):
