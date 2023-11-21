@@ -1,5 +1,5 @@
 import torch
-from torch.nn import nn
+import torch.nn as nn
 from hw_tts.model.AdaptorBlocks import VariancePredictor, LengthRegulator
 
 

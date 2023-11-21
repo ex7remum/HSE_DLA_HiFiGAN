@@ -94,7 +94,7 @@ if __name__ == "__main__":
             np.save(os.path.join(pitch_dir, "ljspeech-pitch-%05d.npy" % (idx + 1)), pitch, allow_pickle=False)
             np.save(os.path.join(energy_dir, "ljspeech-energy-%05d.npy" % (idx + 1)), energy, allow_pickle=False)
 
-    with open(os.pat.join(out_dir, "train.txt"), "wb", encoding='utf-8') as f:
+    with open(os.path.join(out_dir, "train.txt"), "wb", encoding='utf-8') as f:
         f.write('\n'.join(texts))
         f.write('\n')
 
