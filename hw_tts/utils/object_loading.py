@@ -34,7 +34,7 @@ def create_dataloader(dataset, configs, params):
 
     # create dataloader
     dataloader = DataLoader(
-        dataset, batch_size=bs, collate_fn=collator.collate_fn(),
+        dataset, batch_size=bs, collate_fn=collator.collate_fn,
         shuffle=shuffle, num_workers=num_workers,
         batch_sampler=batch_sampler, drop_last=drop_last, pin_memory=True
     )
