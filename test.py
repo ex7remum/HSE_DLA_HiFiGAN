@@ -33,7 +33,7 @@ def get_batch(name, raw_text, text_id, alpha=1.0, pitch_alpha=1.0, energy_alpha=
     return batch
 
 
-def main(config, out_dir):
+def main(config, out_dir, test_file):
     os.makedirs(out_dir, exist_ok=True)
 
     # define cpu or gpu if possible
@@ -53,12 +53,8 @@ def main(config, out_dir):
 
     waveglow = WaveGlowInfer('./pretrained_models/waveglow_256channels_ljs_v2.pt', device)
 
-    test_text = [
-            "A defibrillator is a device that gives a high energy electric shock to the heart of someone who is in cardiac arrest",
-            "Massachusetts Institute of Technology may be best known for its math, science and engineering education",
-            "Wasserstein distance or Kantorovich Rubinstein metric is a distance function defined between probability distributions on a given metric space",
-            "Vsem privet, s vami professor moriarti"
-        ]
+    with open(test_file, encoding='utf-8') as f:
+        test_text = f.readlines()
 
     test_data = defaultdict(list)
     for idx, text in enumerate(test_text):
@@ -120,6 +116,13 @@ if __name__ == "__main__":
         help="Directory to write results",
     )
     args.add_argument(
+        "-t",
+        "--test",
+        default="test.txt",
+        type=str,
+        help="File with test texts",
+    )
+    args.add_argument(
         "-j",
         "--jobs",
         default=1,
@@ -169,4 +172,4 @@ if __name__ == "__main__":
         with Path(args.config).open() as f:
             config.config.update(json.load(f))
 
-    main(config, args.output)
+    main(config, args.output, args.test)
