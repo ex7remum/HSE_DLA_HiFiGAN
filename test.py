@@ -34,8 +34,15 @@ def get_batch(name, raw_text, text_id, alpha=1.0, pitch_alpha=1.0, energy_alpha=
 
 
 def main(config, out_dir):
+    wg_dir = './pretrained_models'
+    os.makedirs(wg_dir, exist_ok=True)
+
+    print('Donwloading pretrained WaveGlow')
+    gdown.download("https://drive.google.com/uc?export=download&id=1WsibBTsuRg_SF2Z6L6NFRTT-NjEy1oTx",
+                   wg_dir + '/waveglow_256channels_ljs_v2.pt')
+
     model_url = 'https://drive.google.com/uc?export=download&id=1srknAuXrL0C9ULtXKmqKc2qK3txDPomy'
-    model_path = 'pretrained_models/model.pth'
+    model_path = './pretrained_models/model.pth'
     if not os.path.exists(model_path):
         print('Downloading FastSpeech2 model.')
         gdown.download(model_url, model_path)
@@ -44,7 +51,7 @@ def main(config, out_dir):
         print('FastSpeech2 model already exists.')
 
     config_url = 'https://drive.google.com/uc?export=download&id=1GI32lN--jI8uLtX2955KNy_pwMos-9Kb'
-    config_path = 'pretrained_models/config.json'
+    config_path = './pretrained_models/config.json'
     if not os.path.exists(config_path):
         print('Downloading FastSpeech2 model test config.')
         gdown.download(config_url, config_path)
@@ -102,7 +109,7 @@ def main(config, out_dir):
                 batch["src_pos"] = batch["src_pos"].to(device)
                 res = model(**batch)
                 audio = waveglow(res["mel_output"][0])
-                name = "text={}/{}.wav".format(idx, batch["name"])
+                name = os.path.join(out_dir, "text={}_{}.wav".format(idx, batch["name"]))
                 write(name, 22050, audio)
 
 
