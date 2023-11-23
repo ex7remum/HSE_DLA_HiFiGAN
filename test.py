@@ -85,7 +85,7 @@ def main(config, out_dir):
                 res = model(**batch)
                 audio = waveglow(res["mel_output"][0])
                 name = os.path.join(out_dir, "text={}_{}.wav".format(idx, batch["name"]))
-                write(name, 22050, audio)
+                write(name, 22050, audio.numpy())
 
 
 if __name__ == "__main__":
