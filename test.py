@@ -34,31 +34,6 @@ def get_batch(name, raw_text, text_id, alpha=1.0, pitch_alpha=1.0, energy_alpha=
 
 
 def main(config, out_dir):
-    wg_dir = './pretrained_models'
-    os.makedirs(wg_dir, exist_ok=True)
-
-    print('Donwloading pretrained WaveGlow')
-    gdown.download("https://drive.google.com/uc?export=download&id=1WsibBTsuRg_SF2Z6L6NFRTT-NjEy1oTx",
-                   wg_dir + '/waveglow_256channels_ljs_v2.pt')
-
-    model_url = 'https://drive.google.com/uc?export=download&id=1srknAuXrL0C9ULtXKmqKc2qK3txDPomy'
-    model_path = './pretrained_models/model.pth'
-    if not os.path.exists(model_path):
-        print('Downloading FastSpeech2 model.')
-        gdown.download(model_url, model_path)
-        print('Downloaded FastSpeech2 model.')
-    else:
-        print('FastSpeech2 model already exists.')
-
-    config_url = 'https://drive.google.com/uc?export=download&id=1GI32lN--jI8uLtX2955KNy_pwMos-9Kb'
-    config_path = './pretrained_models/config.json'
-    if not os.path.exists(config_path):
-        print('Downloading FastSpeech2 model test config.')
-        gdown.download(config_url, config_path)
-        print('Downloaded FastSpeech2 model test config.')
-    else:
-        print('FastSpeech2 model config already exists.')
-
     os.makedirs(out_dir, exist_ok=True)
 
     # define cpu or gpu if possible
@@ -152,6 +127,31 @@ if __name__ == "__main__":
     )
 
     args = args.parse_args()
+
+    wg_dir = './pretrained_models'
+    os.makedirs(wg_dir, exist_ok=True)
+
+    print('Donwloading pretrained WaveGlow')
+    gdown.download("https://drive.google.com/uc?export=download&id=1WsibBTsuRg_SF2Z6L6NFRTT-NjEy1oTx",
+                   wg_dir + '/waveglow_256channels_ljs_v2.pt')
+
+    model_url = 'https://drive.google.com/uc?export=download&id=1srknAuXrL0C9ULtXKmqKc2qK3txDPomy'
+    model_path = './pretrained_models/model.pth'
+    if not os.path.exists(model_path):
+        print('Downloading FastSpeech2 model.')
+        gdown.download(model_url, model_path)
+        print('Downloaded FastSpeech2 model.')
+    else:
+        print('FastSpeech2 model already exists.')
+
+    config_url = 'https://drive.google.com/uc?export=download&id=1GI32lN--jI8uLtX2955KNy_pwMos-9Kb'
+    config_path = './pretrained_models/config.json'
+    if not os.path.exists(config_path):
+        print('Downloading FastSpeech2 model test config.')
+        gdown.download(config_url, config_path)
+        print('Downloaded FastSpeech2 model test config.')
+    else:
+        print('FastSpeech2 model config already exists.')
 
     # set GPUs
     if args.device is not None:
