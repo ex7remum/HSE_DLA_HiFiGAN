@@ -30,6 +30,7 @@ class PeriodDiscriminator(torch.nn.Module):
         if time % self.period != 0:
             n_pad = self.period - (time % self.period)
             x = F.pad(x, (0, n_pad), "reflect")
+            time = x.shape[-1]
         x = x.view(bs, channels, time // self.period, self.period)
 
         features = []
