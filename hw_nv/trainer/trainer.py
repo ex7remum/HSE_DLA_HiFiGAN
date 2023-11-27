@@ -149,7 +149,7 @@ class Trainer(BaseTrainer):
                                               batch['gt_wav'])
         batch.update(d_out)
 
-        self.model.freeze_discriminator(unfreeze=True)
+        # self.model.freeze_discriminator(unfreeze=True)
         self.d_optimizer.zero_grad()
         losses = self.d_criterion(**batch)
 
@@ -164,7 +164,7 @@ class Trainer(BaseTrainer):
         if self.lr_d_scheduler is not None:
             self.lr_d_scheduler.step()
 
-        self.model.freeze_discriminator(unfreeze=False)
+        # self.model.freeze_discriminator(unfreeze=False)
         self.g_optimizer.zero_grad()
         d_out = self.model.disrciminator_step(batch['gen_audio'], batch['gt_wav'])
         batch.update(d_out)
