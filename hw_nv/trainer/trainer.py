@@ -50,7 +50,7 @@ class Trainer(BaseTrainer):
         self.log_step = 50
 
         self.train_metrics = MetricTracker(
-            "g_loss", "msd_adv_loss", "mpd_adv_loss", "adv_loss"
+            "g_loss", "msd_adv_loss", "mpd_adv_loss", "adv_loss",
             "mel_loss", "fm_mpd", "fm_msd", "fm_loss", "d_loss",
             "mpd_loss", "msd_loss", "g grad norm", "d grad norm", writer=self.writer
         )
