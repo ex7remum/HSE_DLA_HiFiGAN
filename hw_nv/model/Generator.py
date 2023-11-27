@@ -78,7 +78,7 @@ class Generator(nn.Module):
 
         self.h_channels = h
         self.k_u = k_u
-        self.enter_conv = weight_norm(nn.Conv1D(in_channels=MelSpectrogramConfig.n_mels, out_channels=h,
+        self.enter_conv = weight_norm(nn.Conv1d(in_channels=MelSpectrogramConfig.n_mels, out_channels=h,
                                       kernel_size=7, stride=1, padding=3))
         self.blocks = nn.ModuleList()
 
