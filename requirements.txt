@@ -9,9 +9,7 @@ pandas
 librosa
 unidecode
 dacite
-scikit-learn
 pillow
-pyworld
 wget
 wandb
 gdown

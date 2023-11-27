@@ -1,17 +1,16 @@
 import argparse
 import collections
 import warnings
-
+import itertools
 import numpy as np
 import torch
 
-import hw_tts.loss as module_loss
-import hw_tts.metric as module_metric
-import hw_tts.model as module_arch
-from hw_tts.trainer import Trainer
-from hw_tts.utils import prepare_device
-from hw_tts.utils.object_loading import get_dataloaders
-from hw_tts.utils.parse_config import ConfigParser
+import hw_nv.loss as module_loss
+import hw_nv.model as module_arch
+from hw_nv.trainer import Trainer
+from hw_nv.utils import prepare_device
+from hw_nv.utils.object_loading import get_dataloaders
+from hw_nv.utils.parse_config import ConfigParser
 
 warnings.filterwarnings("ignore", category=UserWarning)
 
@@ -40,27 +39,36 @@ def main(config):
         model = torch.nn.DataParallel(model, device_ids=device_ids)
 
     # get function handles of loss and metrics
-    loss_module = config.init_obj(config["loss"], module_loss).to(device)
-    metrics = [
-        config.init_obj(metric_dict, module_metric)
-        for metric_dict in config["metrics"]
-    ]
+    d_loss_module = config.init_obj(config["d_loss"], module_loss).to(device)
+    g_loss_module = config.init_obj(config["g_loss"], module_loss).to(device)
+    # metrics = [
+    #     config.init_obj(metric_dict, module_metric)
+    #     for metric_dict in config["metrics"]
+    # ]
 
     # build optimizer, learning rate scheduler. delete every line containing lr_scheduler for
     # disabling scheduler
-    trainable_params = filter(lambda p: p.requires_grad, model.parameters())
-    optimizer = config.init_obj(config["optimizer"], torch.optim, trainable_params)
-    lr_scheduler = config.init_obj(config["lr_scheduler"], torch.optim.lr_scheduler, optimizer)
+
+    trainable_params_g = filter(lambda p: p.requires_grad, model.generator.parameters())
+    g_optimizer = config.init_obj(config["g_optimizer"], torch.optim, trainable_params_g)
+    lr_g_scheduler = config.init_obj(config["lr_g_scheduler"], torch.optim.lr_scheduler, g_optimizer)
+
+    trainable_params_d = filter(lambda p: p.requires_grad, itertools.chain(model.MPD.parameters(),
+                                model.MSD.parameters()))
+    d_optimizer = config.init_obj(config["d_optimizer"], torch.optim, trainable_params_d)
+    lr_d_scheduler = config.init_obj(config["lr_d_scheduler"], torch.optim.lr_scheduler, d_optimizer)
 
     trainer = Trainer(
         model,
-        loss_module,
-        metrics,
-        optimizer,
+        g_criterion=g_loss_module,
+        d_criterion=d_loss_module,
+        g_optimizer=g_optimizer,
+        d_optimizer=d_optimizer,
         config=config,
         device=device,
         dataloaders=dataloaders,
-        lr_scheduler=lr_scheduler,
+        lr_g_scheduler=lr_g_scheduler,
+        lr_d_scheduler=lr_d_scheduler,
         len_epoch=config["trainer"].get("len_epoch", None)
     )
 
