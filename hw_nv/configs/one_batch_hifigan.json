@@ -13,7 +13,7 @@
         {
           "type": "LJSpeechWAV",
           "args": {
-            "data_path": "./data/LJSpeech-1.1",
+            "data_path": "./data/LJSpeech-1.1/wavs",
             "max_wav_len": 8192,
             "limit": 2
           }
