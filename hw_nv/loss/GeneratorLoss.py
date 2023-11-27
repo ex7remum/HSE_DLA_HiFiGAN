@@ -26,8 +26,8 @@ class GeneratorLoss(nn.Module):
         return loss
 
     def forward(self, spectrogram, gen_audio, gen_mpd_score,
-                gen_msd_score, real_mpd_feature, gen_mpd_feature,
-                real_msd_feature, gen_msd_feature, **kwargs):
+                gen_msd_score, real_mpd_features, gen_mpd_features,
+                real_msd_features, gen_msd_features, **kwargs):
 
         gen_mel = self.mel_gen(gen_audio)
         mel_loss = self.l1_loss(spectrogram, gen_mel)
@@ -36,8 +36,8 @@ class GeneratorLoss(nn.Module):
         mpd_adv_loss = self.generator_loss(gen_mpd_score)
         adv_loss = msd_adv_loss + mpd_adv_loss
 
-        fm_mpd = self.feature_loss(real_mpd_feature, gen_mpd_feature)
-        fm_msd = self.feature_loss(real_msd_feature, gen_msd_feature)
+        fm_mpd = self.feature_loss(real_mpd_features, gen_mpd_features)
+        fm_msd = self.feature_loss(real_msd_features, gen_msd_features)
         fm_loss = fm_mpd + fm_msd
 
         g_loss = self.mel_coef * mel_loss + self.fm_coef * fm_loss + adv_loss
