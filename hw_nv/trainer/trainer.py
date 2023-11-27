@@ -197,8 +197,8 @@ class Trainer(BaseTrainer):
             wav, _ = librosa.load(os.path.join(test_data_path, filename))
             mel = mel_gen(wav)
             with torch.no_grad():
-                gen_audio = self.model(mel.unsqueeze(0))["gen_audio"]
-                gen_audio = gen_audio.squeeze(0)
+                gen_audio = self.model(mel.unsqueeze(0).to(self.device))["gen_audio"]
+                gen_audio = gen_audio.squeeze(0).cpu()
                 self.writer.add_audio(filename + "_gen", gen_audio, MelSpectrogramConfig.sr)
                 self.writer.add_audio(filename, wav, MelSpectrogramConfig.sr)
 
@@ -218,14 +218,14 @@ class Trainer(BaseTrainer):
 
         idx = np.random.choice(len(batch["spectrogram"]))
         audio = batch["gen_audio"][idx]
-        self.writer.add_audio("train/audio", audio, MelSpectrogramConfig.sr)
+        self.writer.add_audio("train/audio", audio.detach().cpu(), MelSpectrogramConfig.sr)
             
         audio = batch["gt_wav"][idx]
-        self.writer.add_audio("train/audio_target", audio, MelSpectrogramConfig.sr)
+        self.writer.add_audio("train/audio_target", audio.detach().cpu(), MelSpectrogramConfig.sr)
 
         mel_tgt = batch['spectrogram'][idx]
         mel_gen = MelSpectrogram()
-        mel_pred = mel_gen(batch['gen_audio'][idx].unsqueeze(0)).squeeze(0)
+        mel_pred = mel_gen(batch['gen_audio'][idx].unsqueeze(0).detach().cpu()).squeeze(0)
         self._log_spectrogram("train/mel_output", mel_pred)
         self._log_spectrogram("train/mel_target", mel_tgt)
 
