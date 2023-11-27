@@ -97,5 +97,4 @@ class Generator(nn.Module):
         x = F.leaky_relu(x, self.lrelu_slope)
         x = self.out_conv(x)
         x = torch.tanh(x).squeeze(1)
-        print(x.shape)
         return x

@@ -1,7 +1,7 @@
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
-from hw_nv.preprocess.MelSpectrogram import MelSpectrogram, MelSpectrogramConfig
+from hw_nv.preprocess.MelSpectrogram import MelSpectrogram
 
 
 class GeneratorLoss(nn.Module):
@@ -30,12 +30,6 @@ class GeneratorLoss(nn.Module):
                 real_msd_features, gen_msd_features, **kwargs):
 
         gen_mel = self.mel_gen(gen_audio)
-
-        if gen_mel.shape[-1] > spectrogram.shape[-1]:
-            diff = gen_mel.shape[-1] - spectrogram.shape[-1]
-            pad = torch.zeros((spectrogram.shape[0], spectrogram.shape[1], diff)).fill_(MelSpectrogramConfig.pad_value)
-            pad = pad.to(spectrogram.device)
-            spectrogram = torch.cat([spectrogram, pad], dim=-1)
 
         mel_loss = self.l1_loss(spectrogram, gen_mel)
 
