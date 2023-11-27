@@ -54,7 +54,7 @@ class GeneratorBlock(nn.Module):
         for res_block in self.MFR:
             out = res_block(x)
             sum_x = out if sum_x is None else sum_x + out
-        x = sum_x / len(self.residuals)
+        x = sum_x / len(self.MFR)
         return x
 
 
