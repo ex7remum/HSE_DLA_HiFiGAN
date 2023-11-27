@@ -17,11 +17,6 @@ def create_dataloader(dataset, configs, params):
         shuffle = True
         batch_sampler = None
         drop_last = True
-    elif "batch_sampler" in params:
-        batch_sampler = configs.init_obj(params["batch_sampler"], batch_sampler_module,
-                                            data_source=dataset)
-        bs, shuffle = 1, False
-        drop_last = False
     else:
         raise Exception()
 
