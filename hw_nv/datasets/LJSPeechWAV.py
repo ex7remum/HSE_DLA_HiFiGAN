@@ -21,7 +21,7 @@ class LJSpeechWAV(Dataset):
 
     def __getitem__(self, idx):
         name = self.wav_names[idx]
-        wav, _ = librosa.load(os.path.join(self.wav_dir, name))
+        wav, _ = librosa.load(os.path.join(self.data_path, name))
         wav = torch.from_numpy(wav)
         if self.max_wav_len is not None:
             if len(wav) < self.max_wav_len:
