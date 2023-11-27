@@ -4,7 +4,6 @@ from torch.utils.data import ConcatDataset, DataLoader, random_split
 import torch
 
 import hw_nv.datasets
-import hw_nv.batch_sampler as batch_sampler_module
 from hw_nv.utils.parse_config import ConfigParser
 from hw_nv.collate_fn.collate import collate_fn
 

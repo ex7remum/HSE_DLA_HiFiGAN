@@ -3,9 +3,7 @@
   "n_gpu": 1,
   "arch": {
     "type": "HiFiGAN",
-    "args": {
-
-    }
+    "args": {}
   },
   "data": {
     "train": {
@@ -15,7 +13,7 @@
         {
           "type": "LJSpeechWAV",
           "args": {
-            "data_path": "./data/train.txt",
+            "data_path": "./data/LJSpeech-1.1",
             "max_wav_len": 8192,
             "limit": 2
           }
