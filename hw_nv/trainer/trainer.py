@@ -195,7 +195,7 @@ class Trainer(BaseTrainer):
         test_data_path = './test_data'
         for filename in os.listdir(test_data_path):
             wav, _ = librosa.load(os.path.join(test_data_path, filename))
-            mel = mel_gen(wav)
+            mel = mel_gen(torch.from_numpy(wav))
             with torch.no_grad():
                 gen_audio = self.model(mel.unsqueeze(0).to(self.device))["gen_audio"]
                 gen_audio = gen_audio.squeeze(0).cpu()
