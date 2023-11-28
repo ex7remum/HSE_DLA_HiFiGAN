@@ -1,0 +1,72 @@
+{
+  "name": "config",
+  "n_gpu": 1,
+  "arch": {
+    "type": "HiFiGAN",
+    "args": {}
+  },
+  "data": {
+    "train": {
+      "batch_size": 20,
+      "num_workers": 0,
+      "datasets": [
+        {
+          "type": "LJSpeechWAV",
+          "args": {
+            "data_path": "./data/LJSpeech-1.1/wavs",
+            "max_wav_len": 8192
+          }
+        }
+      ]
+    }
+  },
+  "g_optimizer": {
+    "type": "AdamW",
+    "args": {
+      "lr": 2e-4,
+      "weight_decay": 0.01,
+      "betas": [0.8, 0.99]
+    }
+  },
+  "g_loss": {
+    "type": "GeneratorLoss",
+    "args": {}
+  },
+  "lr_g_scheduler": {
+    "type": "ExponentialLR",
+    "args": {
+      "gamma": 0.999
+    }
+  },
+  "d_optimizer": {
+    "type": "AdamW",
+    "args": {
+      "lr": 2e-4,
+      "weight_decay": 0.01,
+      "betas": [0.8, 0.99]
+    }
+  },
+  "d_loss": {
+    "type": "DiscriminatorLoss",
+    "args": {}
+  },
+
+  "lr_d_scheduler": {
+    "type": "ExponentialLR",
+    "args": {
+      "gamma": 0.999
+    }
+  },
+  "trainer": {
+    "epochs": 200,
+    "save_dir": "saved/",
+    "save_period": 5,
+    "verbosity": 2,
+    "monitor": "off",
+    "early_stop": 100,
+    "visualize": "wandb",
+    "wandb_project": "nv_project",
+    "len_epoch": 500,
+    "grad_norm_clip": 100
+  }
+}
