@@ -135,6 +135,12 @@ class Trainer(BaseTrainer):
                 break
         log = last_train_metrics
 
+        if self.lr_d_scheduler is not None:
+            self.lr_d_scheduler.step()
+
+        if self.lr_g_scheduler is not None:
+            self.lr_g_scheduler.step()
+
         self._evaluation_epoch()
 
         return log
@@ -161,8 +167,6 @@ class Trainer(BaseTrainer):
         self._clip_grad_norm("discriminator")
         self.train_metrics.update("d grad norm", self.get_grad_norm('discriminator'))
         self.d_optimizer.step()
-        if self.lr_d_scheduler is not None:
-            self.lr_d_scheduler.step()
 
         # self.model.freeze_discriminator(unfreeze=False)
         self.g_optimizer.zero_grad()
@@ -175,8 +179,6 @@ class Trainer(BaseTrainer):
         self._clip_grad_norm("generator")
         self.train_metrics.update("g grad norm", self.get_grad_norm('generator'))
         self.g_optimizer.step()
-        if self.lr_g_scheduler is not None:
-            self.lr_g_scheduler.step()
 
         for loss_name, loss_value in losses.items():
             metrics.update(loss_name, loss_value.item())
