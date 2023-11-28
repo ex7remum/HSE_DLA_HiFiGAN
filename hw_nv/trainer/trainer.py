@@ -200,7 +200,7 @@ class Trainer(BaseTrainer):
                 gen_audio = self.model(mel.unsqueeze(0).to(self.device))["gen_audio"]
                 gen_audio = gen_audio.squeeze(0).cpu()
                 self.writer.add_audio(filename + "_gen", gen_audio, MelSpectrogramConfig.sr)
-                self.writer.add_audio(filename, wav, MelSpectrogramConfig.sr)
+                self.writer.add_audio(filename, torch.from_numpy(wav), MelSpectrogramConfig.sr)
 
     def _progress(self, batch_idx):
         base = "[{}/{} ({:.0f}%)]"
