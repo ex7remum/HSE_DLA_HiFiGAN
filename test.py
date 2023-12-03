@@ -95,7 +95,7 @@ if __name__ == "__main__":
     wg_dir = './pretrained_models'
     os.makedirs(wg_dir, exist_ok=True)
 
-    model_url = 'https://drive.google.com/uc?export=download&id=1d4ZMxmrUiQ1Axjw4enLjo1XA7Bz3Z_hh'
+    model_url = 'https://drive.google.com/uc?export=download&id=1EpkdueKIsEKB1GFsrexQnpp7i-Y8UgRr'
     model_path = './pretrained_models/model.pth'
     if not os.path.exists(model_path):
         print('Downloading HiFi GAN model.')
